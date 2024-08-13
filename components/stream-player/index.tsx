@@ -8,10 +8,12 @@ import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
 import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
-import { Header } from "./header";
+import { Header, HeaderSkeleton } from "./header";
+import { InfoCard } from "./info-card";
+import { AboutCard } from "./about-card";
 
 interface StreamPlayerProps {
-  user: User & { stream: Stream | null };
+  user: User & { stream: Stream | null; _count: { followedBy: number } };
   stream: Stream;
   isFollowing: boolean;
 }
@@ -21,8 +23,7 @@ export const StreamPlayer = ({
   isFollowing,
 }: StreamPlayerProps) => {
   const { token, name, identity } = useViewerToken(user.id);
-  const { collapsed, variant, onCollapse, onExpand, onChangeVariant } =
-    useChatSidebar((state) => state);
+  const { collapsed } = useChatSidebar((state) => state);
 
   if (!token || !name || !identity) {
     return <StreamPlayerSkeleton />;
@@ -42,11 +43,32 @@ export const StreamPlayer = ({
           collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 "
         )}
       >
-        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-4 lg:overflow-y-auto hidden-scrollbar pb-10">
           <Video hostName={user.username} hostIdentity={user.id} />
-          <Header hostName={user.username} hostIdentity={user.id} />
+          <Header
+            hostName={user.username}
+            hostIdentity={user.id}
+            imageUrl={user.imageUrl}
+            viewerIdentity={identity}
+            isFollowing={isFollowing}
+            name={stream.name}
+          />
+          <InfoCard
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            name={stream.name}
+            thumbnailUrl={stream.thumbnailUrl}
+          />
+          <AboutCard
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            bio={user.bio}
+            followedByCount={user._count.followedBy}
+          />
         </div>
-        <div className={cn("col-span-1", collapsed && "hidden")}>
+        <div className={cn("col-span-1 2xl:col-span-2", collapsed && "hidden")}>
           <Chat
             viewerName={name}
             hostName={user.username}
@@ -64,12 +86,12 @@ export const StreamPlayer = ({
 
 export const StreamPlayerSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
-      <div className="space-y-4 col-span-1 lg:con-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+    <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 lg:gap-y-0  h-full">
+      <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-4 lg:overflow-y-auto hidden-scrollbar pb-10">
         <VideoSkeleton />
-        {/* TO DO HEADER SKELETON */}
+        <HeaderSkeleton />
       </div>
-      <div className="col-span-1 bg-background">
+      <div className="col-span-1 2xl:col-span-2 bg-background">
         <ChatSkeleton />
       </div>
     </div>

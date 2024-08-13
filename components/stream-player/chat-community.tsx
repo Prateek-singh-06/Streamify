@@ -1,8 +1,8 @@
 "use client";
 
 import { useParticipants } from "@livekit/components-react";
-import { useMemo, useState } from "react";
 import useDebounce from "@/hooks/use-debounce";
+import { useMemo, useState } from "react";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { CommunityItem } from "./community-item";
