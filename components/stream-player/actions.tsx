@@ -56,7 +56,7 @@ export const Actions = ({
 
   return (
     <Button
-      onClick={() => {}}
+      onClick={toggleFollow}
       disabled={isPending || isHost}
       variant="pirmary"
       size="lg"

@@ -26,13 +26,12 @@ export const CommunityItem = ({
   const isHost = viewerName === hostName;
 
   const handleBlock = () => {
-    if (!participantName || isSelf || !isHost) {
-      startTransition(() => {
-        onBlock(participantIdentity)
-          .then(() => toast.success(`Blocked ${participantName}`))
-          .catch(() => toast.error("Something went wrong"));
-      });
-    }
+    if (!participantName || isSelf || !isHost) return;
+    startTransition(() => {
+      onBlock(participantIdentity)
+        .then(() => toast.success(`Blocked ${participantName}`))
+        .catch(() => toast.error("Something went wrong"));
+    });
   };
   return (
     <div

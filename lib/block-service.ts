@@ -21,8 +21,8 @@ export const isBlockedByUser = async(id:string) => {
             const blockedUsers=await db.block.findUnique({
                 where:{
                     blockerId_blockedId:{
-                        blockedId:otheruser.id,
-                        blockerId:self.id,
+                        blockerId:otheruser.id,
+                        blockedId:self.id,
                     },
                 },
             });
