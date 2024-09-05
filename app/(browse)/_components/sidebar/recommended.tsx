@@ -21,9 +21,9 @@ export const Recommended = ({ data }: RecomendedProps) => {
       )}
 
       <ul className="space-y-2 px-2">
-        {data.map((user) => {
+        {data.map((user, key) => {
           return (
-            <li>
+            <li key={key}>
               <UserItem
                 key={user.id}
                 username={user.username}
@@ -41,11 +41,11 @@ export const Recommended = ({ data }: RecomendedProps) => {
 export const RecommendedSkeleton = () => {
   return (
     <ul className="px-2">
-      <UserItemSkeleton />
-      <UserItemSkeleton />
-      <UserItemSkeleton />
-      <UserItemSkeleton />
-      <UserItemSkeleton />
+      <UserItemSkeleton key={0} />
+      <UserItemSkeleton key={1} />
+      <UserItemSkeleton key={2} />
+      <UserItemSkeleton key={3} />
+      <UserItemSkeleton key={4} />
       {/* {Array(3).map((_, i) => {
         return <UserItemSkeleton key={i} />;
       })} */}

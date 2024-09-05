@@ -22,9 +22,9 @@ export const Following = ({ data }: followingProps) => {
         </div>
       )}
       <ul className="space-y-2 px-2">
-        {data.map((follow) => {
+        {data.map((follow, key) => {
           return (
-            <li>
+            <li key={key}>
               <UserItem
                 key={follow.following.id}
                 username={follow.following.username}
@@ -42,12 +42,9 @@ export const Following = ({ data }: followingProps) => {
 export const FollowingSkeleton = () => {
   return (
     <ul className="px-2 pt-2 sm:pt-0">
-      <UserItemSkeleton />
-      <UserItemSkeleton />
-      <UserItemSkeleton />
-      {/* {Array(3).map((_, i) => {
-        return <UserItemSkeleton key={i} />;
-      })} */}
+      <UserItemSkeleton key={0} />
+      <UserItemSkeleton key={1} />
+      <UserItemSkeleton key={2} />
     </ul>
   );
 };
